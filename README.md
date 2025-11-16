@@ -33,8 +33,8 @@ YOUR_SERVER → SQL Server name
 YOUR_DATABASE → Created database
 ⚙️ Apply Migrations (EF Core)
 
-Open Package Manager Console and run:
-Add-Migration "InitialMigration"
+Open Package Manager Console and run and select default project AssignmentSpraxa.API:
+Add-Migration "Migration Name"
 Update-Database
 
 This will create all database tables.
