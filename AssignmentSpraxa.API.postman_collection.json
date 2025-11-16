@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4e6091be-83a1-4b5c-a310-61d28bc67cd4",
+		"_postman_id": "fdc9116f-4751-4f70-a091-53ca88c00b8c",
 		"name": "AssignmentSpraxa.API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "42985174"
@@ -101,17 +101,17 @@
 											"listen": "test",
 											"script": {
 												"exec": [
-													"// Parse the JSON response\r",
-													"let res = pm.response.json();\r",
-													"\r",
-													"// Check if token exists and save it\r",
-													"if (res.token) {\r",
-													"    pm.environment.set(\"jwt\", res.token);\r",
-													"    console.log(\"JWT updated successfully:\", res.token);\r",
-													"} else {\r",
-													"    console.log(\"Token not found in response.\");\r",
-													"}\r",
-													""
+													"// Parse the JSON response",
+													"const jsonData = pm.response.json();",
+													"",
+													"// Extract the token from the response",
+													"const token = jsonData.token;",
+													"",
+													"// Save the token to a collection variable named \"jwt\"",
+													"pm.collectionVariables.set(\"jwt\", token);",
+													"",
+													"// Optional: Log confirmation",
+													"console.log(\"JWT token saved to collection variable 'jwt'\");"
 												],
 												"type": "text/javascript",
 												"packages": {},
@@ -129,7 +129,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"userNameOrEmail\": \"aditya\",\n  \"password\": \"string\",\n  \"provider\": \"local\"\n}",
+											"raw": "{\n  \"userNameOrEmail\": \"aditya\",\n  \"password\": \"string\",\n  \"provider\": \"string\"\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
@@ -199,11 +199,92 @@
 					"name": "Medicine",
 					"item": [
 						{
+							"name": "Search",
+							"item": [
+								{
+									"name": "/api/Medicine/Search",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{jwt}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/Medicine/Search?src=string",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Medicine",
+												"Search"
+											],
+											"query": [
+												{
+													"key": "src",
+													"value": "string"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/Medicine/Search?src=string",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"Medicine",
+														"Search"
+													],
+													"query": [
+														{
+															"key": "src",
+															"value": "string"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
 							"name": "{id}",
 							"item": [
 								{
 									"name": "/api/Medicine/:id",
 									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{jwt}}",
+													"type": "string"
+												}
+											]
+										},
 										"method": "GET",
 										"header": [],
 										"url": {
@@ -219,7 +300,7 @@
 											"variable": [
 												{
 													"key": "id",
-													"value": "4b903706-e0be-9a0c-c131-49f987625df1"
+													"value": "76dc516d-f1e3-97f0-1738-c59cda50d69d"
 												}
 											]
 										}
@@ -268,7 +349,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"company\": \"string\",\n  \"expiryDate\": \"2017-08-22T20:13:41.217Z\",\n  \"name\": \"string\",\n  \"stock\": 3866,\n  \"medicineId\": \"aa6ff7e3-8357-8abd-beb8-541f6c67a22c\",\n  \"price\": 8605.878890161444,\n  \"createdOn\": \"2021-11-06T09:36:01.275Z\"\n}",
+											"raw": "{\n  \"company\": \"string\",\n  \"expiryDate\": \"2002-03-08T17:51:00.108Z\",\n  \"name\": \"string\",\n  \"stock\": 8363,\n  \"medicineId\": \"26b5d03b-1b32-1ce7-d7c8-d9b88079178d\",\n  \"price\": 382.93688385475866,\n  \"createdOn\": \"1974-03-20T18:47:17.625Z\"\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
@@ -289,7 +370,7 @@
 											"variable": [
 												{
 													"key": "id",
-													"value": "4b903706-e0be-9a0c-c131-49f987625df1"
+													"value": "76dc516d-f1e3-97f0-1738-c59cda50d69d"
 												}
 											]
 										}
@@ -307,7 +388,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n  \"company\": \"string\",\n  \"expiryDate\": \"2017-08-22T20:13:41.217Z\",\n  \"name\": \"string\",\n  \"stock\": 3866,\n  \"medicineId\": \"aa6ff7e3-8357-8abd-beb8-541f6c67a22c\",\n  \"price\": 8605.878890161444,\n  \"createdOn\": \"2021-11-06T09:36:01.275Z\"\n}",
+													"raw": "{\n  \"company\": \"string\",\n  \"expiryDate\": \"2002-03-08T17:51:00.108Z\",\n  \"name\": \"string\",\n  \"stock\": 8363,\n  \"medicineId\": \"26b5d03b-1b32-1ce7-d7c8-d9b88079178d\",\n  \"price\": 382.93688385475866,\n  \"createdOn\": \"1974-03-20T18:47:17.625Z\"\n}",
 													"options": {
 														"raw": {
 															"headerFamily": "json",
@@ -359,7 +440,7 @@
 											"variable": [
 												{
 													"key": "id",
-													"value": "4b903706-e0be-9a0c-c131-49f987625df1"
+													"value": "76dc516d-f1e3-97f0-1738-c59cda50d69d"
 												}
 											]
 										}
@@ -462,7 +543,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"company\": \"string\",\n  \"expiryDate\": \"2002-04-07T20:31:59.065Z\",\n  \"name\": \"string\",\n  \"stock\": 5243,\n  \"price\": 5301.997092311246,\n  \"createdOn\": \"1959-03-10T00:37:16.278Z\"\n}",
+									"raw": "{\n  \"company\": \"string\",\n  \"expiryDate\": \"1980-03-01T17:30:50.093Z\",\n  \"name\": \"string\",\n  \"stock\": 1182,\n  \"price\": 7588.268466383254,\n  \"createdOn\": \"1990-09-30T10:23:51.269Z\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -494,7 +575,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"company\": \"string\",\n  \"expiryDate\": \"2002-04-07T20:31:59.065Z\",\n  \"name\": \"string\",\n  \"stock\": 5243,\n  \"price\": 5301.997092311246,\n  \"createdOn\": \"1959-03-10T00:37:16.278Z\"\n}",
+											"raw": "{\n  \"company\": \"string\",\n  \"expiryDate\": \"1980-03-01T17:30:50.093Z\",\n  \"name\": \"string\",\n  \"stock\": 1182,\n  \"price\": 7588.268466383254,\n  \"createdOn\": \"1990-09-30T10:23:51.269Z\"\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
@@ -548,7 +629,7 @@
 											"variable": [
 												{
 													"key": "id",
-													"value": "4b903706-e0be-9a0c-c131-49f987625df1"
+													"value": "76dc516d-f1e3-97f0-1738-c59cda50d69d"
 												}
 											]
 										}
@@ -612,7 +693,7 @@
 													"variable": [
 														{
 															"key": "id",
-															"value": "4b903706-e0be-9a0c-c131-49f987625df1"
+															"value": "76dc516d-f1e3-97f0-1738-c59cda50d69d"
 														}
 													]
 												}
@@ -649,6 +730,67 @@
 													"body": ""
 												}
 											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Search",
+							"item": [
+								{
+									"name": "/api/User/Search",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/User/Search?src=string",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"User",
+												"Search"
+											],
+											"query": [
+												{
+													"key": "src",
+													"value": "string"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/User/Search?src=string",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"User",
+														"Search"
+													],
+													"query": [
+														{
+															"key": "src",
+															"value": "string"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
 										}
 									]
 								}
@@ -705,6 +847,10 @@
 		{
 			"key": "baseUrl",
 			"value": "/"
+		},
+		{
+			"key": "jwt",
+			"value": ""
 		}
 	]
 }
