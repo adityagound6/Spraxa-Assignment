@@ -51,7 +51,6 @@ POST /api/Auth/register
 Sample body:
 {
   "fullName": "your full name",
-  "externalId": "your external id or unique key",
   "status": true,
   "userName": "your username",
   "email": "your email address",
