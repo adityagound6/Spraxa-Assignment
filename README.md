@@ -86,3 +86,15 @@ View login history
 Search & view medicine details
 Limited access to user data
 Users cannot be added directly. They must sign up, after which Admin can update their role.
+
+
+🛠 Tools & Technologies Used
+This application was developed using the following tools and technologies:
+Visual Studio – Primary IDE for .NET development
+SQL Server – Database management system used for storing application data
+Entity Framework Core – ORM used for migrations and database operations
+ASP.NET Core – Backend API and Portal application
+Postman – For testing API endpoints
+ChatGPT – Used for generating code snippets, improving documentation, and solving development issues
+JavaScript / jQuery – Used in the Portal for client-side interactions
+HTML5 / CSS3 / Bootstrap – For UI development
