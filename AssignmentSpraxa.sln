@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36705.20
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssignmentSpraxa.Portal", "AssignmentSpraxa.Portal\AssignmentSpraxa.Portal.csproj", "{6B32D0DD-A8D7-44FA-ABC8-5549DEE7E4F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssignmentSpraxa.API", "AssignmentSpraxa.API\AssignmentSpraxa.API.csproj", "{F4166719-372F-4C99-B596-228467A3EA01}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B32D0DD-A8D7-44FA-ABC8-5549DEE7E4F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B32D0DD-A8D7-44FA-ABC8-5549DEE7E4F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B32D0DD-A8D7-44FA-ABC8-5549DEE7E4F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B32D0DD-A8D7-44FA-ABC8-5549DEE7E4F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4166719-372F-4C99-B596-228467A3EA01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4166719-372F-4C99-B596-228467A3EA01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4166719-372F-4C99-B596-228467A3EA01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4166719-372F-4C99-B596-228467A3EA01}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5C59E626-59B0-4D0D-B3FF-8A78E812BD8E}
+	EndGlobalSection
+EndGlobal

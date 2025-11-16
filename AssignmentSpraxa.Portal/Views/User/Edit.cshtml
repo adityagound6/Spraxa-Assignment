@@ -1,0 +1,74 @@
+﻿@using AssignmentSpraxa.Portal.DTO
+@model UserDto
+
+@{
+    var loggedInUserId = User.FindFirst("Id")?.Value;
+    bool isAdmin = User.IsInRole("Admin");
+    bool isSelf = Model.Id == loggedInUserId;
+    bool canEditAll = isSelf;                    
+    bool adminEditingOther = isAdmin && !isSelf;
+    bool noEdit = !isSelf && !isAdmin;   
+    string disableAll = canEditAll ? "" : "no-edit"; 
+    string disableRole = (!isAdmin) ? "" : "disable";
+}
+<style>
+    .no-edit {
+        pointer-events: none;
+        background-color: #e9ecef !important;
+        opacity: 0.7;
+    }
+</style>
+
+
+<div class="main-contain-data">
+    <form asp-action="Edit" method="post" id="userForm">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <input type="hidden" asp-for="Id" />
+
+        <!-- Fullname -->
+        <div class="form-group mb-2">
+            <label asp-for="Fullname"></label>
+            <input asp-for="Fullname" class="form-control @(disableAll)" />
+        </div>
+
+        <!-- Username -->
+        <div class="form-group mb-2">
+            <label asp-for="Username"></label>
+            <input asp-for="Username" class="form-control @(disableAll)" />
+        </div>
+
+        <!-- Email -->
+        <div class="form-group mb-2">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control @(disableAll)" />
+        </div>
+
+        <!-- Phone -->
+        <div class="form-group mb-2">
+            <label asp-for="PhoneNumber"></label>
+            <input asp-for="PhoneNumber" class="form-control @(disableAll)" />
+        </div>
+
+        <!-- Roles -->
+        <div class="form-group mb-2">
+            <label>Roles</label>
+            <input type="text"
+                   name="RolesInput"
+                   class="form-control @(disableRole)"
+                   value="@(Model.Roles != null ? string.Join(", ", Model.Roles) : "")" />
+            <small class="text-muted">Only self can edit roles</small>
+        </div>
+
+        <br />
+
+        @if (canEditAll || adminEditingOther)
+        {
+            <button type="submit" class="btn btn-primary">Save User</button>
+        }
+
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+

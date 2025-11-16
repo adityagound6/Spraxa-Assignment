@@ -1,0 +1,29 @@
+﻿@using AssignmentSpraxa.Portal.Models
+@model RegisterRequest
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container mt-5 col-md-4">
+    <h3>Register</h3>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">@ViewBag.Error</div>
+    }
+
+    <form method="post">
+        <input type="text" name="FullName" class="form-control mb-2" placeholder="Full name" required />
+        <input type="text" name="UserName" class="form-control mb-2" placeholder="Usermname" required />
+        <input type="email" name="Email" class="form-control mb-2" placeholder="Email" required />
+        <input type="password" name="Password" class="form-control mb-2" placeholder="Password" required />
+        <input type="text" name="PhoneNumber" class="form-control mb-2" placeholder="Phone Number" />
+
+        <button class="btn btn-success w-100">Register</button>
+
+        @* <a href="/Auth/GoogleLogin" class="btn btn-danger w-100 mt-3">
+            <i class="fab fa-google"></i> Login with Google
+        </a> *@
+    </form>
+    <a asp-action="Login" asp-controller="Auth" class="d-block mt-3">Already have an account? Login</a>
+</div>

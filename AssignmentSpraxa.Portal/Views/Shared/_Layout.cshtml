@@ -1,0 +1,109 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper HtmlHelper
+
+@{
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var isUnauthorized = currentController == "Auth";
+    var userName = User.FindFirst("FullName")?.Value
+                   ?? User.Identity?.Name
+                   ?? "User";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Spraxa</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AssignmentSpraxa.Portal.styles.css" asp-append-version="true" />
+
+    <!-- Font Awesome (Fix for missing fas icons) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Toastr -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+</head>
+<body>
+    @if (!isUnauthorized)
+    {
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Assignment Spraxa</span>
+            </div>
+
+            <nav class="nav-menu">
+                <a asp-action="Index" asp-controller="Home"
+                   class="nav-item @(currentController == "Home" ? "active" : "")">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <a asp-action="Index" asp-controller="User"
+                   class="nav-item @(currentController == "User" ? "active" : "")">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span>
+                </a>
+
+                <a asp-action="Index" asp-controller="Medicine"
+                   class="nav-item @(currentController == "Medicine" ? "active" : "")">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Medicines</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title" id="pageTitle">Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search...">
+                    </div>
+                    <div class="user-profile">
+                        <span>@userName</span>
+
+                        <form asp-controller="Auth" asp-action="Logout" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </header>
+
+            @RenderBody()
+        </div>
+    }
+    else
+    {
+        <div class="main-content">
+            @RenderBody()
+        </div>
+    }
+
+    <!-- Required JS -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/script.js" asp-append-version="true"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

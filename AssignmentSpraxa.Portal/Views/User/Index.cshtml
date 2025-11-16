@@ -1,0 +1,212 @@
+﻿@using AssignmentSpraxa.Portal.DTO
+@model List<UserDto>
+
+@{
+    ViewData["Title"] = "User Management";
+    bool isAdmin = User.IsInRole("Admin");
+}
+
+<div class="main-contain-data" id="appointments">
+    <div class="section-header">
+        <h2>User Management</h2>
+        @* @{
+            if(isAdmin){
+                <a class="btn btn-primary" asp-action="Create" asp-controller="User">
+                    <i class="fas fa-plus"></i> Add User
+                </a>
+            }
+        } *@
+    </div>
+
+    <div class="table-container">
+        <div class="table-header">
+            @* <div class="search-filter">
+                <input type="text" placeholder="Search user..." id="userSearch">
+
+                <select id="userFilter">
+                    <option value="">All</option>
+                    <option value="admin">Admins</option>
+                    <option value="user">Users</option>
+                </select>
+            </div> *@
+        </div>
+
+        <table class="data-table" id="usersTable">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Roles</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var u in Model)
+                {
+                    <tr>
+                        <td>@u.Id</td>
+
+                        <td>
+                            <div class="patient-cell">
+                                <span>@u.Username</span>
+                            </div>
+                        </td>
+
+                        <td>@u.Email</td>
+                        <td>@u.PhoneNumber</td>
+
+                        <td>
+                            @if (u.Roles != null && u.Roles.Any())
+                            {
+                                <span>@string.Join(", ", u.Roles)</span>
+                            }
+                            else
+                            {
+                                <span>No Role</span>
+                            }
+                        </td>
+
+                        <td>
+                            <div class="action-buttons">
+                                <a class="btn-icon"
+                                   asp-controller="User"
+                                   asp-action="Details"
+                                   asp-route-id="@u.Id"
+                                   title="View">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                @{
+                                    if (isAdmin)
+                                    {
+                                        <a class="btn-icon text-danger"
+                                           href="javascript:void(0);"
+                                           onclick="openDeleteModal('@u.Id')"
+                                           title="Delete">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+
+                                        <a class="btn-icon"
+                                           asp-controller="User"
+                                           asp-action="Edit"
+                                           asp-route-id="@u.Id"
+                                           title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    }
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                Are you sure you want to delete this user?
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                <form id="deleteForm" method="post" asp-action="Delete">
+                    <input type="hidden" name="id" id="deleteId" />
+                    <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var isAdmin = @isAdmin.ToString().ToLower();
+
+    $(document).ready(function () {
+
+        $("#userSearch").on("keyup", function () {
+            let term = $(this).val().trim();
+
+            $.ajax({
+                url: "/User/Search",
+                type: "GET",
+                data: { src: term },
+                success: function (users) {
+
+                    let rows = "";
+
+                    users.forEach(user => {
+
+                        let roles = (user.roles && user.roles.length > 0)
+                            ? user.roles.join(", ")
+                            : "No Role";
+
+                        rows += `
+                            <tr>
+                                <td>${user.id}</td>
+                                <td>${user.username}</td>
+                                <td>${user.email}</td>
+                                <td>${user.phoneNumber ?? ""}</td>
+                                <td>${roles}</td>
+
+                                <td>
+                                    <div class="action-buttons">
+                                        <a class="btn-icon" href="/User/Details/${user.id}" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+
+                                        ${isAdmin ? `
+                                            <a class="btn-icon" href="/User/Edit/${user.id}" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a class="btn-icon text-danger" href="javascript:void(0);"
+                                               onclick="openDeleteModal('${user.id}')"
+                                               title="Delete">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        ` : ""}
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                    });
+
+                    if (rows === "") {
+                        rows = `
+                            <tr>
+                                <td colspan="6" class="text-center">No data found</td>
+                            </tr>`;
+                    }
+
+                    $("#usersTable tbody").html(rows);
+                },
+
+                error: function () {
+                    $("#usersTable tbody").html(`
+                        <tr>
+                            <td colspan="6" class="text-center">No data found</td>
+                        </tr>`);
+                }
+            });
+        });
+
+    });
+
+    function openDeleteModal(id) {
+        $("#deleteId").val(id);
+        new bootstrap.Modal(document.getElementById("deleteModal")).show();
+    }
+</script>
+

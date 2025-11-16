@@ -1,0 +1,17 @@
+[
+  {
+    "Name": "AssignmentSprax",
+    "Projects": [
+      {
+        "Path": "AssignmentSpraxa.Portal\\AssignmentSpraxa.Portal.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      },
+      {
+        "Path": "AssignmentSpraxa.API\\AssignmentSpraxa.API.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      }
+    ]
+  }
+]
