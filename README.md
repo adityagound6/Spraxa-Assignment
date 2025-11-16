@@ -57,8 +57,8 @@ Sample body:
   "email": "your email address",
   "password": "your password",
   "phoneNumber": "your phone number",
-  "provider": "local",
-  "roles": ["Admin"]
+  "provider": "local", //don't need to change
+  "roles": ["Admin"] //don't need to change
 }
 
 
